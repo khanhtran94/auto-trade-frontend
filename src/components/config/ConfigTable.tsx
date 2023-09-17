@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Table} from "antd";
+import {Button, Table} from "antd";
+import CollectionCreateForm from "./ConfigForm";
 
 interface Item {
     id: number;
@@ -19,6 +20,11 @@ interface DataType {
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
+    const [open, setOpen] = useState(false);
+    const onCreate = (values: any) => {
+        console.log('Received values of form: ', values);
+        setOpen(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,15 +41,7 @@ function ConfigTable() {
         fetchData();
     }, []);
     console.log(data)
-    const dataExample: DataType[] = [];
-    for (let i = 0; i < 46; i++) {
-        dataExample.push({
-            key: i,
-            name: `Edward King ${i}`,
-            age: 32,
-            address: `London, Park Lane no. ${i}`,
-        });
-    }
+
     const columns = [
         {
             title: 'Id',
@@ -66,6 +64,29 @@ function ConfigTable() {
             dataIndex: 'value',
             key: 'value',
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: () => (
+                <div>
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            setOpen(true);
+                        }}
+                    >
+                        Edit
+                    </Button>
+                    <CollectionCreateForm
+                        open={open}
+                        onCreate={onCreate}
+                        onCancel={() => {
+                            setOpen(false);
+                        }}
+                    />
+                </div>
+            ),
+        }
     ];
 
     return (
