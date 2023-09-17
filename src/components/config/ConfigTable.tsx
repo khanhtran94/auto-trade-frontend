@@ -1,47 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Button, Table} from "antd";
-import CollectionCreateForm from "./ConfigForm";
+import ConfigForm from "./ConfigForm";
+import Item from "./types";
 
-interface Item {
-    id: number;
-    code: string;
-    description: string;
-    value: string;
-    // Define other properties of your item
-}
-
-interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
-}
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
     const [open, setOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
+            setData(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
     const onCreate = (values: any) => {
         console.log('Received values of form: ', values);
         setOpen(false);
     };
-
+    const onUpdate = async (values: any) => {
+        try {
+            debugger
+            const response = await axios.put(`http://localhost:8080/configs/${values.id}`, values, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log('Config updated successfully:', response.data);
+        } catch (error) {
+            console.error('Error updating config:', error);
+        }
+        fetchData();
+        setOpen(false);
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Call the backend API to get the list of items
-                const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
-                // Set the data with the fetched item list
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
         fetchData();
     }, []);
     console.log(data)
-
+    const handleEditClick = (item: Item) => {
+        setSelectedItem(item);
+        setOpen(true);
+    };
     const columns = [
         {
             title: 'Id',
@@ -67,22 +69,22 @@ function ConfigTable() {
         {
             title: 'Action',
             key: 'action',
-            render: () => (
+            render: (text: string, record: Item) => (
                 <div>
                     <Button
                         type="primary"
-                        onClick={() => {
-                            setOpen(true);
-                        }}
+                        onClick={() => handleEditClick(record)}
                     >
                         Edit
                     </Button>
-                    <CollectionCreateForm
+                    <ConfigForm
                         open={open}
                         onCreate={onCreate}
+                        onUpdate={onUpdate}
                         onCancel={() => {
                             setOpen(false);
                         }}
+                        selectedItem={selectedItem}
                     />
                 </div>
             ),
