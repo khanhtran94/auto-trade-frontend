@@ -4,11 +4,14 @@ import {Button, Table} from "antd";
 import ConfigForm from "./ConfigForm";
 import Item from "./types";
 
+import { PlusCircleOutlined } from '@ant-design/icons';
+import type { SizeType } from 'antd/es/config-provider/SizeContext';
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
     const [open, setOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [size, setSize] = useState<SizeType>('large'); // default is 'middle'
     const fetchData = async () => {
         try {
             const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
@@ -17,9 +20,27 @@ function ConfigTable() {
             console.error('Error fetching data:', error);
         }
     };
-    const onCreate = (values: any) => {
-        console.log('Received values of form: ', values);
-        setOpen(false);
+    const onCreate = async (values: any) => {
+        try {
+            // Gọi API để thêm một mục mới
+            const response = await axios.post('http://localhost:8080/configs', values, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 201) {
+                console.log('Config created successfully:', response.data);
+                setOpen(false);
+
+                // Nếu muốn tải lại dữ liệu sau khi thêm một mục mới, gọi fetchData()
+                fetchData();
+            } else {
+                console.error('Error creating config:', response.data);
+            }
+        } catch (error) {
+            console.error('Error creating config:', error);
+        }
     };
     const onUpdate = async (values: any) => {
         try {
@@ -44,6 +65,10 @@ function ConfigTable() {
         setSelectedItem(item);
         setOpen(true);
     };
+    const handleCreateClick = () => {
+        setOpen(true);
+        setSelectedItem(null);
+    }
     const columns = [
         {
             title: 'Id',
@@ -77,15 +102,7 @@ function ConfigTable() {
                     >
                         Edit
                     </Button>
-                    <ConfigForm
-                        open={open}
-                        onCreate={onCreate}
-                        onUpdate={onUpdate}
-                        onCancel={() => {
-                            setOpen(false);
-                        }}
-                        selectedItem={selectedItem}
-                    />
+
                 </div>
             ),
         }
@@ -94,7 +111,18 @@ function ConfigTable() {
     return (
         <div>
             <h2>Config Table</h2>
+            <Button type="primary" shape="round" icon={<PlusCircleOutlined />} size={size} title={'Add'}
+            onClick={() => handleCreateClick()}/>
             <Table dataSource={data} columns={columns}/>
+            <ConfigForm
+                open={open}
+                onCreate={onCreate}
+                onUpdate={onUpdate}
+                onCancel={() => {
+                    setOpen(false);
+                }}
+                selectedItem={selectedItem}
+            />
         </div>
     );
 }
