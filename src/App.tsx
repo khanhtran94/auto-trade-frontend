@@ -5,8 +5,10 @@ import {
     UserOutlined,
     VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
+import {Layout, Menu, Button, theme} from 'antd';
 import React, { useState } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import ConfigTable from "./components/config/ConfigTable";
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,24 +26,12 @@ const App: React.FC = () => {
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
-                    items={[
-                        {
-                            key: '1',
-                            icon: <UserOutlined />,
-                            label: 'nav 1',
-                        },
-                        {
-                            key: '2',
-                            icon: <VideoCameraOutlined />,
-                            label: 'nav 2',
-                        },
-                        {
-                            key: '3',
-                            icon: <UploadOutlined />,
-                            label: 'nav 3',
-                        },
-                    ]}
-                />
+
+                >
+                    <Menu.Item key="1" icon={<UserOutlined />}>
+                        <Link to="/nav1">nav 1</Link>
+                    </Menu.Item>
+                </Menu>
             </Sider>
             <Layout>
                 <Header style={{ padding: 0, background: colorBgContainer }}>
@@ -66,6 +56,9 @@ const App: React.FC = () => {
                 >
                     Content
                 </Content>
+                <Routes>
+                    <Route path="/nav1" element={ConfigTable}/>
+                </Routes>
             </Layout>
         </Layout>
     );

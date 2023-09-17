@@ -1,5 +1,3 @@
-// src/components/ReadTable.tsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -10,7 +8,7 @@ interface Item {
     // Define other properties of your item
 }
 
-const ConfigTable: React.FC = () => {
+function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
 
     useEffect(() => {
@@ -51,6 +49,6 @@ const ConfigTable: React.FC = () => {
             </table>
         </div>
     );
-};
+}
 
 export default ConfigTable;
