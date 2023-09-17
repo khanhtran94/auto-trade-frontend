@@ -54,11 +54,11 @@ const App: React.FC = () => {
                         background: colorBgContainer,
                     }}
                 >
-                    Content
+                    <Routes>
+                        <Route path="/nav1" element={<ConfigTable/>} />
+                    </Routes>
                 </Content>
-                <Routes>
-                    <Route path="/nav1" element={ConfigTable}/>
-                </Routes>
+
             </Layout>
         </Layout>
     );
