@@ -4,6 +4,7 @@ import {
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
+    BankOutlined
 } from '@ant-design/icons';
 import {Layout, Menu, Button, theme} from 'antd';
 import React, { useState } from 'react';
@@ -32,7 +33,7 @@ const App: React.FC = () => {
                     <Menu.Item key="1" icon={<UserOutlined />}>
                         <Link to="/nav1">Config</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<UserOutlined />}>
+                    <Menu.Item key="2" icon={<BankOutlined />}>
                         <Link to="/coin">Coin</Link>
                     </Menu.Item>
                 </Menu>
