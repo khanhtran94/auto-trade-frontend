@@ -2,24 +2,38 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Button, Table} from "antd";
 import ConfigForm from "./ConfigForm";
-import Item from "./types";
+import Item from "../../type/Item";
 
-import { PlusCircleOutlined } from '@ant-design/icons';
-import type { SizeType } from 'antd/es/config-provider/SizeContext';
+import {PlusCircleOutlined} from '@ant-design/icons';
+import type {SizeType} from 'antd/es/config-provider/SizeContext';
+import Coin from "../../type/Coin";
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
+    const [coins, setCoins] = useState<Coin[]>([])
     const [open, setOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [size, setSize] = useState<SizeType>('large'); // default is 'middle'
     const fetchData = async () => {
         try {
             const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
+            debugger
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+
+    const fetchCoins = async () => {
+        try {
+            const response = await axios.get<Coin[]>('http://127.0.0.1:8080/coins');
+            debugger
+            setCoins(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     const onCreate = async (values: any) => {
         try {
             // Gọi API để thêm một mục mới
@@ -59,6 +73,7 @@ function ConfigTable() {
     };
     useEffect(() => {
         fetchData();
+        fetchCoins();
     }, []);
     console.log(data)
     const handleEditClick = (item: Item) => {
@@ -76,6 +91,16 @@ function ConfigTable() {
             key: 'id'
         },
 
+        {
+            title: 'Coin',
+            dataIndex: 'coin_id',
+            key: 'coin_id',
+            render: (text: string, record: Item) => {
+                debugger
+                const coin = coins.find(coin => coin.id === record.coinId);
+                return coin ? coin.symbol : 'N/A';
+            }
+        },
         {
             title: 'Code',
             dataIndex: 'code',
@@ -111,8 +136,8 @@ function ConfigTable() {
     return (
         <div>
             <h2>Config Table</h2>
-            <Button type="primary" shape="round" icon={<PlusCircleOutlined />} size={size} title={'Add'}
-            onClick={() => handleCreateClick()}/>
+            <Button type="primary" shape="round" icon={<PlusCircleOutlined/>} size={size} title={'Add'}
+                    onClick={() => handleCreateClick()}/>
             <Table dataSource={data} columns={columns}/>
             <ConfigForm
                 open={open}
@@ -122,6 +147,7 @@ function ConfigTable() {
                     setOpen(false);
                 }}
                 selectedItem={selectedItem}
+                coinList={coins}
             />
         </div>
     );

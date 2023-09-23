@@ -29,7 +29,7 @@ const App: React.FC = () => {
 
                 >
                     <Menu.Item key="1" icon={<UserOutlined />}>
-                        <Link to="/nav1">nav 1</Link>
+                        <Link to="/nav1">Config</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>

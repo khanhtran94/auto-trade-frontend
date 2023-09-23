@@ -1,6 +1,7 @@
 import {Button, Form, Input, Modal, Radio} from 'antd';
 import {useEffect} from "react";
-import Item from "./types";
+import Item from "../../type/Item";
+import Coin from "../../type/Coin";
 
 
 interface CollectionCreateFormProps {
@@ -9,6 +10,7 @@ interface CollectionCreateFormProps {
     onUpdate: (values: Item) => void;
     onCancel: () => void;
     selectedItem?: any;
+    coinList?: Coin[];
 }
 
 const ConfigForm: React.FC<CollectionCreateFormProps> = ({
