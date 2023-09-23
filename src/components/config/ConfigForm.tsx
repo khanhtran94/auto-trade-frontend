@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import Item from "../../type/Item";
 import Coin from "../../type/Coin";
 import coin from "../../type/Coin";
+import configCodes from "../../ConfigCode";
 
 const {Option} = Select;
 
@@ -101,7 +102,15 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
                     label="Code"
                     rules={[{required: true, message: 'Please input the title of collection!'}]}
                 >
-                    <Input/>
+                    <Select
+                        placeholder="Select a code"
+                    >
+                        {configCodes.map((configCode) => (
+                            <Select.Option key={configCode.value} value={configCode.value}>
+                                {configCode.label}
+                            </Select.Option>
+                        ))}
+                    </Select>
                 </Form.Item>
                 <Form.Item name="description" label="Description">
                     <Input type="textarea"/>
