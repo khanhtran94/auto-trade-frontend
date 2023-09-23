@@ -1,7 +1,10 @@
-import {Button, Form, Input, Modal, Radio} from 'antd';
+import {Button, Form, Input, Modal, Radio, Select} from 'antd';
 import {useEffect} from "react";
 import Item from "../../type/Item";
 import Coin from "../../type/Coin";
+import coin from "../../type/Coin";
+
+const {Option} = Select;
 
 
 interface CollectionCreateFormProps {
@@ -18,7 +21,8 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
                                                              onCreate,
                                                              onCancel,
                                                              onUpdate,
-                                                             selectedItem
+                                                             selectedItem,
+                                                             coinList,
                                                          }) => {
     const [form] = Form.useForm();
     useEffect(() => {
@@ -46,6 +50,10 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
             onCreate(values);
         }
         onCancel();
+    };
+    const handleChange = (value: string) => {
+        // Xử lý khi giá trị thay đổi, có thể lưu vào state hoặc thực hiện các hành động khác
+        console.log('Selected value:', value);
     };
     return (
         <Modal
@@ -75,6 +83,19 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
                 name="form_in_modal"
                 initialValues={{modifier: 'public'}}
             >
+                <Form.Item name="coinId" label="coinId">
+                    <Select placeholder="Select a coin"
+                            onChange={handleChange}
+                    >
+                        {coinList && coinList.map((coin) => (
+                            <Option value={coin.id}>
+                                {coin.symbol}
+                            </Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+
+
                 <Form.Item
                     name="code"
                     label="Code"
