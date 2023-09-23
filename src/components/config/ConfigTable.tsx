@@ -7,6 +7,7 @@ import Item from "../../type/Item";
 import {PlusCircleOutlined} from '@ant-design/icons';
 import type {SizeType} from 'antd/es/config-provider/SizeContext';
 import Coin from "../../type/Coin";
+import coin from "../../type/Coin";
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
@@ -99,7 +100,9 @@ function ConfigTable() {
                 debugger
                 const coin = coins.find(coin => coin.id === record.coinId);
                 return coin ? coin.symbol : 'N/A';
-            }
+            },
+            filters: coins.map((coin) => ({ text: coin.symbol, value: coin.id })),
+            onFilter: (value: any, record: Item) => record.coinId === value
         },
         {
             title: 'Code',

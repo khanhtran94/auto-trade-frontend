@@ -9,6 +9,7 @@ import {Layout, Menu, Button, theme} from 'antd';
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import ConfigTable from "./components/config/ConfigTable";
+import CoinTable from "./components/coin/CoinTable";
 
 const { Header, Sider, Content } = Layout;
 
@@ -30,6 +31,9 @@ const App: React.FC = () => {
                 >
                     <Menu.Item key="1" icon={<UserOutlined />}>
                         <Link to="/nav1">Config</Link>
+                    </Menu.Item>
+                    <Menu.Item key="2" icon={<UserOutlined />}>
+                        <Link to="/coin">Coin</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>
@@ -56,6 +60,7 @@ const App: React.FC = () => {
                 >
                     <Routes>
                         <Route path="/nav1" element={<ConfigTable/>} />
+                        <Route path="/coin" element={<CoinTable/>} />
                     </Routes>
                 </Content>
 

@@ -20,12 +20,7 @@ function CoinTable  () {
             title: 'Symbol',
             dataIndex: 'symbol',
             key: 'symbol',
-        },
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
+        }
     ];
 
     useEffect(() => {
@@ -44,7 +39,10 @@ function CoinTable  () {
     }, []);
 
     return (
-        <Table dataSource={data} columns={columns}/>);)
-};
+        <div>
+            <Table dataSource={coins} columns={columns} />
+        </div>
+    );
+}
 
 export default CoinTable;
