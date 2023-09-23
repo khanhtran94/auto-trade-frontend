@@ -6,7 +6,8 @@ import Item from "../../type/Item";
 import {PlusCircleOutlined} from '@ant-design/icons';
 import type {SizeType} from 'antd/es/config-provider/SizeContext';
 import Coin from "../../type/Coin";
-function CoinTable  () {
+
+function CoinTable() {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -22,25 +23,23 @@ function CoinTable  () {
             key: 'symbol',
         }
     ];
-
+    const fetchCoins = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8080/coins');
+            setCoins(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching coin data:', error);
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        const fetchCoins = async () => {
-            try {
-                const response = await axios.get('http://127.0.0.1:8080/coins');
-                setCoins(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching coin data:', error);
-                setLoading(false);
-            }
-        };
-
         fetchCoins();
     }, []);
 
     return (
         <div>
-            <Table dataSource={coins} columns={columns} />
+            <Table dataSource={coins} columns={columns}/>
         </div>
     );
 }
