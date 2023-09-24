@@ -1,8 +1,7 @@
-import {Button, Form, Input, Modal, Radio, Select} from 'antd';
-import {useEffect} from "react";
+import {Form, Input, Modal, Select} from 'antd';
+import React, {useEffect} from "react";
 import Item from "../../type/Item";
 import Coin from "../../type/Coin";
-import coin from "../../type/Coin";
 import configCodes from "../../ConfigCode";
 
 const {Option} = Select;
@@ -35,6 +34,7 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
                 code: selectedItem.code,
                 description: selectedItem.description,
                 value: selectedItem.value,
+                coinId: selectedItem.coinId,
             });
         } else {
             form.resetFields();
@@ -60,7 +60,7 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
         <Modal
             open={open}
             title="Create a new collection"
-            okText="Update"
+            okText="Save"
             cancelText="Cancel"
             onCancel={onCancel}
             onOk={() => {
