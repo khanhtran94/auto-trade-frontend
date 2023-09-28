@@ -27,7 +27,6 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
     const [form] = Form.useForm();
     useEffect(() => {
         if (selectedItem) {
-            debugger
             // Set form fields based on the selectedItem
             form.setFieldsValue({
                 id: selectedItem.id,
