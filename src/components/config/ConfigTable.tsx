@@ -140,7 +140,11 @@ function ConfigTable() {
     return (
         <div>
             <h2>Config Table</h2>
-            <Button type="primary" shape="round" icon={<PlusCircleOutlined/>} size={size} title={'Add'}
+            <Button type="primary"
+                    shape="round"
+                    icon={<PlusCircleOutlined/>}
+                    size={size}
+                    title={'Add'}
                     onClick={() => handleCreateClick()}/>
             <Table dataSource={data} columns={columns}/>
             <ConfigForm

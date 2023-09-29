@@ -6,11 +6,35 @@ import Item from "../../type/Item";
 import {PlusCircleOutlined} from '@ant-design/icons';
 import type {SizeType} from 'antd/es/config-provider/SizeContext';
 import Coin from "../../type/Coin";
+import ConfigForm from "../config/ConfigForm";
+import CoinForm from "./CoinForm";
 
 function CoinTable() {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState(false);
+    const onCreate = async (values: any) => {
+        try {
+            // Gọi API để thêm một mục mới
+            const response = await axios.post('http://localhost:8080/coins', values, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
+            if (response.status === 201) {
+                console.log('Config created successfully:', response.data);
+                setOpen(false);
+
+                // Nếu muốn tải lại dữ liệu sau khi thêm một mục mới, gọi fetchData()
+                fetchCoins();
+            } else {
+                console.error('Error creating config:', response.data);
+            }
+        } catch (error) {
+            console.error('Error creating config:', error);
+        }
+    };
     const columns = [
         {
             title: 'ID',
@@ -21,6 +45,10 @@ function CoinTable() {
             title: 'Symbol',
             dataIndex: 'symbol',
             key: 'symbol',
+        }, {
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price'
         }
     ];
     const fetchCoins = async () => {
@@ -36,10 +64,25 @@ function CoinTable() {
     useEffect(() => {
         fetchCoins();
     }, []);
+    const handleCreateClick = () => {
+        setOpen(true);
+    }
 
     return (
         <div>
+            <Button type="primary"
+                    shape="round"
+                    icon={<PlusCircleOutlined/>}
+                    title={'Add'}
+                    onClick={() => handleCreateClick()}/>
             <Table dataSource={coins} columns={columns}/>
+            <CoinForm
+                open={open}
+                onCreate={onCreate}
+                onCancel={() => {
+                    setOpen(false);
+                }}
+            />
         </div>
     );
 }
