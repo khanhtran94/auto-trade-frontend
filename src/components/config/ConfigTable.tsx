@@ -7,7 +7,6 @@ import Item from "../../type/Item";
 import {PlusCircleOutlined} from '@ant-design/icons';
 import type {SizeType} from 'antd/es/config-provider/SizeContext';
 import Coin from "../../type/Coin";
-import coin from "../../type/Coin";
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);

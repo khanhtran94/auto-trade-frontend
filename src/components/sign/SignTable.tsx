@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Table} from 'antd';
 import SignForm from './SignForm';
-import Item from "../../type/Item";
 import {PlusCircleOutlined} from "@ant-design/icons";
 import {SizeType} from "antd/es/config-provider/SizeContext";
-import {signTelegramApi} from "../../apis/sign";
-import {Sign} from "crypto"; // Đảm bảo bạn đã import SignForm từ file tương ứng
+import {signApi} from "../../apis/sign";
+import Sign from "../../type/Sign";
 
 const SignTable = () => {
     const [data, setData] = useState<Sign[]>([]);
@@ -16,7 +15,7 @@ const SignTable = () => {
     const fetchData = async () => {
         try {
             // Gọi API để lấy dữ liệu Sign
-            const response = await signTelegramApi.getAll();
+            const response = await signApi.getAll();
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -27,7 +26,7 @@ const SignTable = () => {
         try {
             // Gọi API để thêm một mục mới
             // const response = await axios.post('API_URL_HERE', values);
-            const response = await signTelegramApi.create(values);
+            const response = await signApi.create(values);
             if (response.status === 201) {
                 setOpen(false);
                 await fetchData();
@@ -44,7 +43,7 @@ const SignTable = () => {
             // Gọi API để cập nhật mục
             // const response = await axios.put(`API_URL_HERE/${values.id}`, values);
             // fetchData(); // Tải lại dữ liệu sau khi cập nhật mục
-            const response = await signTelegramApi.update(values.id, values);
+            const response = await signApi.update(values.id, values);
 
         } catch (error) {
             console.error('Error updating Sign:', error);

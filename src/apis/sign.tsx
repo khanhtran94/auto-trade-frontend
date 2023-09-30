@@ -7,7 +7,7 @@ const api = axios.create({
     baseURL: API_BASE_URL,
 });
 
-export const signTelegramApi = {
+export const signApi = {
     getAll: () => api.get<Sign[]>('/sign'),
     getOne: (id: number) => api.get(`/sign/${id}`),
     create: (data: Sign) => api.post('/sign', data, {
