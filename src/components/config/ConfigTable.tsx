@@ -69,7 +69,7 @@ function ConfigTable() {
         } catch (error) {
             console.error('Error updating config:', error);
         }
-        fetchData();
+        await fetchData();
         setOpen(false);
     };
     useEffect(() => {
