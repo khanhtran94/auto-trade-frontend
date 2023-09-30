@@ -1,20 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Table} from 'antd';
-import SignTelegramForm from './SignTelegramForm';
+import SignForm from './SignForm';
+import Item from "../../type/Item";
 import {PlusCircleOutlined} from "@ant-design/icons";
-import {signTelegramApi} from "../../apis/signTelegram";
-import SignTelegram from "../../type/SignTelegram";
-import {SizeType} from "antd/es/config-provider/SizeContext"; // Đảm bảo bạn đã import SignTelegramForm từ file tương ứng
+import {SizeType} from "antd/es/config-provider/SizeContext";
+import {signTelegramApi} from "../../apis/sign";
+import {Sign} from "crypto"; // Đảm bảo bạn đã import SignForm từ file tương ứng
 
-const SignTelegramTable = () => {
-    const [data, setData] = useState<SignTelegram[]>([]);
+const SignTable = () => {
+    const [data, setData] = useState<Sign[]>([]);
     const [open, setOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<SignTelegram | null>(null);
+    const [selectedItem, setSelectedItem] = useState<Sign | null>(null);
     const [size, setSize] = useState<SizeType>('large'); // default is 'middle'
 
     const fetchData = async () => {
         try {
-            // Gọi API để lấy dữ liệu SignTelegram
+            // Gọi API để lấy dữ liệu Sign
             const response = await signTelegramApi.getAll();
             setData(response.data);
         } catch (error) {
@@ -34,7 +35,7 @@ const SignTelegramTable = () => {
                 console.log("Error creating ", response.data);
             }
         } catch (error) {
-            console.error('Error creating SignTelegram:', error);
+            console.error('Error creating Sign:', error);
         }
     };
 
@@ -46,7 +47,7 @@ const SignTelegramTable = () => {
             const response = await signTelegramApi.update(values.id, values);
 
         } catch (error) {
-            console.error('Error updating SignTelegram:', error);
+            console.error('Error updating Sign:', error);
         }
         await fetchData();
         setOpen(false)
@@ -56,7 +57,7 @@ const SignTelegramTable = () => {
         fetchData();
     }, []);
 
-    const handleEditClick = (item: SignTelegram) => {
+    const handleEditClick = (item: Sign) => {
         setSelectedItem(item);
         setOpen(true);
     };
@@ -73,14 +74,34 @@ const SignTelegramTable = () => {
             key: 'id'
         },
         {
-            title: 'Group name',
-            dataIndex: 'groupName',
-            key: 'groupName'
+            title: 'Symbol',
+            dataIndex: 'symbol',
+            key: 'symbol'
         },
         {
-            title: 'Context',
-            dataIndex: 'context',
-            key: 'context'
+            title: 'Direction',
+            dataIndex: 'direction',
+            key: 'direction'
+        },
+        {
+            title: 'Stoploss',
+            dataIndex: 'stoploss',
+            key: 'stoploss'
+        },
+        {
+            title: 'Takeprofit',
+            dataIndex: 'takeprofit',
+            key: 'takeprofit'
+        },
+        {
+            title: 'Entry From',
+            dataIndex: 'entryFrom',
+            key: 'entryFrom'
+        },
+        {
+            title: 'Entry To',
+            dataIndex: 'entryTo',
+            key: 'entryTo'
         },
         {
             title: 'Status',
@@ -88,9 +109,19 @@ const SignTelegramTable = () => {
             key: 'status'
         },
         {
+            title: 'Create Date',
+            dataIndex: 'createDate',
+            key: 'createDate'
+        },
+        {
+            title: 'Update Date',
+            dataIndex: 'updateDate',
+            key: 'updateDate'
+        },
+        {
             title: 'Action',
             key: 'action',
-            render: (text: string, record: SignTelegram) => (
+            render: (text: string, record: Sign) => (
                 <div>
                     <Button
                         type="primary"
@@ -107,7 +138,7 @@ const SignTelegramTable = () => {
 
     return (
         <div>
-            <h2>SignTelegram Table</h2>
+            <h2>Sign Table</h2>
             <Button
                 type="primary"
                 shape="round"
@@ -117,7 +148,7 @@ const SignTelegramTable = () => {
                 onClick={() => handleCreateClick()}
             />
             <Table dataSource={data} columns={columns}/>
-            <SignTelegramForm
+            <SignForm
                 open={open}
                 onCreate={onCreate}
                 onUpdate={onUpdate}
@@ -130,4 +161,4 @@ const SignTelegramTable = () => {
     );
 };
 
-export default SignTelegramTable;
+export default SignTable;

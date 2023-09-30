@@ -1,52 +1,55 @@
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    UploadOutlined,
     UserOutlined,
-    VideoCameraOutlined,
     BankOutlined
 } from '@ant-design/icons';
 import {Layout, Menu, Button, theme} from 'antd';
-import React, { useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, Route, Routes} from 'react-router-dom';
 import ConfigTable from "./components/config/ConfigTable";
 import CoinTable from "./components/coin/CoinTable";
 import SignTelegramTable from "./components/signTelegram/SignTelegramTable";
+import SignTable from "./components/sign/SignTable";
 
-const { Header, Sider, Content } = Layout;
+const {Header, Sider, Content} = Layout;
 
 const App: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const {
-        token: { colorBgContainer },
+        token: {colorBgContainer},
     } = theme.useToken();
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{minHeight: '100vh'}}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="demo-logo-vertical" />
+                <div className="demo-logo-vertical"/>
                 <Menu
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
 
                 >
-                    <Menu.Item key="1" icon={<UserOutlined />}>
+                    <Menu.Item key="1" icon={<UserOutlined/>}>
                         <Link to="/nav1">Config</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<BankOutlined />}>
+                    <Menu.Item key="2" icon={<BankOutlined/>}>
                         <Link to="/coin">Coin</Link>
                     </Menu.Item>
-                    <Menu.Item key="3" icon={<BankOutlined />}>
+                    <Menu.Item key="3" icon={<BankOutlined/>}>
                         <Link to="/signTelegram">SignTelegram</Link>
+                    </Menu.Item>
+
+                    <Menu.Item key="4" icon={<BankOutlined/>}>
+                        <Link to="/sign">Sign</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
+                <Header style={{padding: 0, background: colorBgContainer}}>
                     <Button
                         type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                        icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
                         onClick={() => setCollapsed(!collapsed)}
                         style={{
                             fontSize: '16px',
@@ -64,9 +67,10 @@ const App: React.FC = () => {
                     }}
                 >
                     <Routes>
-                        <Route path="/nav1" element={<ConfigTable/>} />
-                        <Route path="/coin" element={<CoinTable/>} />
-                        <Route path="/signTelegram" element={<SignTelegramTable/>} />
+                        <Route path="/nav1" element={<ConfigTable/>}/>
+                        <Route path="/coin" element={<CoinTable/>}/>
+                        <Route path="/signTelegram" element={<SignTelegramTable/>}/>
+                        <Route path="/sign" element={<SignTable/>}/>
                     </Routes>
                 </Content>
 
