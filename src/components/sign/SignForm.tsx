@@ -27,8 +27,11 @@ const SignForm: React.FC<SignFormProps> = ({
             debugger
             form.setFieldsValue({
                 symbol: selectedItem.symbol,
-                groupName: selectedItem.groupName,
-                context: selectedItem.context,
+                direction: selectedItem.direction,
+                stoploss: selectedItem.stoploss,
+                takeprofit: selectedItem.takeprofit,
+                entry_from: selectedItem.entry_from,
+                entry_to: selectedItem.entry_to,
                 status: selectedItem.status,
             });
         } else {
@@ -88,12 +91,31 @@ const SignForm: React.FC<SignFormProps> = ({
                 </Form.Item>
 
                 <Form.Item
-                    name="groupName"
-                    label="Group Name"
-                    rules={[{required: true, message: 'Please input the group name!'}]}
+                    name="direction"
+                    label="Direction"
+                    rules={[
+                        {required: true, message: 'Please input the direction!'},
+                    ]}
                 >
                     <Input/>
                 </Form.Item>
+
+                <Form.Item name="stoploss" label="Stoploss">
+                    <Input/>
+                </Form.Item>
+
+                <Form.Item name="takeprofit" label="Takeprofit">
+                    <Input/>
+                </Form.Item>
+
+                <Form.Item name="entryFrom" label="Entry From">
+                    <Input/>
+                </Form.Item>
+
+                <Form.Item name="entryTo" label="Entry To">
+                    <Input/>
+                </Form.Item>
+
                 <Form.Item
                     name='status'
                     label={'Status'}
@@ -109,11 +131,6 @@ const SignForm: React.FC<SignFormProps> = ({
 
                 </Form.Item>
 
-                <Form.Item name="context" label="Context">
-                    <Input.TextArea/>
-                </Form.Item>
-
-                {/* Add other fields based on your Sign model */}
             </Form>
         </Modal>
     );
