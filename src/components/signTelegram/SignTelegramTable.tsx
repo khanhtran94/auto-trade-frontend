@@ -3,12 +3,15 @@ import {Button, Table} from 'antd';
 import SignTelegramForm from './SignTelegramForm';
 import Item from "../../type/Item";
 import {PlusCircleOutlined} from "@ant-design/icons";
-import {signTelegramApi} from "../../apis/signTelegram"; // Đảm bảo bạn đã import SignTelegramForm từ file tương ứng
+import {signTelegramApi} from "../../apis/signTelegram";
+import SignTelegram from "../../type/SignTelegram";
+import {SizeType} from "antd/es/config-provider/SizeContext"; // Đảm bảo bạn đã import SignTelegramForm từ file tương ứng
 
 const SignTelegramTable = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<SignTelegram[]>([]);
     const [open, setOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItem, setSelectedItem] = useState<SignTelegram | null>(null);
+    const [size, setSize] = useState<SizeType>('large'); // default is 'middle'
 
     const fetchData = async () => {
         try {
@@ -20,7 +23,7 @@ const SignTelegramTable = () => {
         }
     };
 
-    const onCreate = async (values) => {
+    const onCreate = async (values: any) => {
         try {
             // Gọi API để thêm một mục mới
             // const response = await axios.post('API_URL_HERE', values);
@@ -36,7 +39,7 @@ const SignTelegramTable = () => {
         }
     };
 
-    const onUpdate = async (values) => {
+    const onUpdate = async (values: any) => {
         try {
             // Gọi API để cập nhật mục
             // const response = await axios.put(`API_URL_HERE/${values.id}`, values);
@@ -54,7 +57,7 @@ const SignTelegramTable = () => {
         fetchData();
     }, []);
 
-    const handleEditClick = (item) => {
+    const handleEditClick = (item: SignTelegram) => {
         setSelectedItem(item);
         setOpen(true);
     };
@@ -88,7 +91,7 @@ const SignTelegramTable = () => {
         {
             title: 'Action',
             key: 'action',
-            render: (text: string, record: Item) => (
+            render: (text: string, record: SignTelegram) => (
                 <div>
                     <Button
                         type="primary"
@@ -111,7 +114,8 @@ const SignTelegramTable = () => {
                 shape="round"
                 icon={<PlusCircleOutlined/>}
                 title={'Add'}
-                onClick={handleCreateClick}
+                size={size}
+                onClick={() => handleCreateClick()}
             />
             <Table dataSource={data} columns={columns}/>
             <SignTelegramForm

@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import ConfigTable from "./components/config/ConfigTable";
 import CoinTable from "./components/coin/CoinTable";
+import SignTelegramTable from "./components/signTelegram/SignTelegramTable";
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,6 +36,9 @@ const App: React.FC = () => {
                     </Menu.Item>
                     <Menu.Item key="2" icon={<BankOutlined />}>
                         <Link to="/coin">Coin</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3" icon={<BankOutlined />}>
+                        <Link to="/signTelegram">SignTelegram</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>
@@ -62,6 +66,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/nav1" element={<ConfigTable/>} />
                         <Route path="/coin" element={<CoinTable/>} />
+                        <Route path="/signTelegram" element={<SignTelegramTable/>} />
                     </Routes>
                 </Content>
 
