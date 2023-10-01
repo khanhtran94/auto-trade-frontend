@@ -30,8 +30,8 @@ const SignForm: React.FC<SignFormProps> = ({
                 direction: selectedItem.direction,
                 stoploss: selectedItem.stoploss,
                 takeprofit: selectedItem.takeprofit,
-                entry_from: selectedItem.entry_from,
-                entry_to: selectedItem.entry_to,
+                entryFrom: selectedItem.entryFrom,
+                entryTo: selectedItem.entryTo,
                 status: selectedItem.status,
                 createDate: selectedItem.createDate,
             });
@@ -42,6 +42,7 @@ const SignForm: React.FC<SignFormProps> = ({
 
     const onFinish = (values: any) => {
         if (selectedItem) {
+            debugger
             // If initialValues exist, it's an update operation
             // Call update function
             onUpdate(values);
