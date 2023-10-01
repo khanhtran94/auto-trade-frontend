@@ -99,7 +99,14 @@ const SignForm: React.FC<SignFormProps> = ({
                         {required: true, message: 'Please input the direction!'},
                     ]}
                 >
-                    <Input/>
+                    <Select
+                        onChange={handleChange}
+                        value={selectedItem?.status}
+                        options={[
+                            {value: 'buy', label: 'Buy'},
+                            {value: 'sell', label: 'Sell'},
+                        ]}
+                    />
                 </Form.Item>
 
                 <Form.Item name="stoploss" label="Stoploss">
