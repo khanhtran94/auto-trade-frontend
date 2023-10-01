@@ -33,6 +33,7 @@ const SignForm: React.FC<SignFormProps> = ({
                 entry_from: selectedItem.entry_from,
                 entry_to: selectedItem.entry_to,
                 status: selectedItem.status,
+                createDate: selectedItem.createDate,
             });
         } else {
             form.resetFields();
