@@ -47,6 +47,7 @@ const ConfigForm: React.FC<CollectionCreateFormProps> = ({
         } else {
             // If initialValues doesn't exist, it's a create operation
             // Call create function
+            debugger
             onCreate(values);
         }
         onCancel();

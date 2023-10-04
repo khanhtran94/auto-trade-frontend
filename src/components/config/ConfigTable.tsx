@@ -17,7 +17,6 @@ function ConfigTable() {
     const fetchData = async () => {
         try {
             const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
-            debugger
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -27,7 +26,6 @@ function ConfigTable() {
     const fetchCoins = async () => {
         try {
             const response = await axios.get<Coin[]>('http://127.0.0.1:8080/coins');
-            debugger
             setCoins(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -96,7 +94,6 @@ function ConfigTable() {
             dataIndex: 'coin_id',
             key: 'coin_id',
             render: (text: string, record: Item) => {
-                debugger
                 const coin = coins.find(coin => coin.id === record.coinId);
                 return coin ? coin.symbol : 'N/A';
             },
