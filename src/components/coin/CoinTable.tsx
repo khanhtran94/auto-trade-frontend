@@ -58,7 +58,15 @@ function CoinTable() {
                     'Content-Type': 'application/json',
                     'access-control-allow-origin': '*'
                 }
-            });
+            }).then((data) => ({
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, OPTION",
+                    "Content-Type": "application/json"
+                },
+                data: data.data
+            }));
+            debugger
             setCoins(response.data);
             setLoading(false);
         } catch (error) {
