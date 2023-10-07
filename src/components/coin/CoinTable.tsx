@@ -16,7 +16,7 @@ function CoinTable() {
     const onCreate = async (values: any) => {
         try {
             // Gọi API để thêm một mục mới
-            const response = await axios.post('http://localhost:8080/coins', values, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/coins`, values, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -53,7 +53,7 @@ function CoinTable() {
     ];
     const fetchCoins = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8080/coins');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/coins`);
             setCoins(response.data);
             setLoading(false);
         } catch (error) {

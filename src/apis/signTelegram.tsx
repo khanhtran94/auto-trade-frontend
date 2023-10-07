@@ -1,7 +1,10 @@
 import axios from 'axios';
 import SignTelegram from "../type/SignTelegram";
 
-const API_BASE_URL = 'http://localhost:8080';  // Thay đổi thành base URL của API
+const API_BASE_URL = process.env.REACT_APP_API_URL;  // Thay đổi thành base URL của API
+
+console.log(process.env.REACT_APP_API_URL); // Output: https://api.example.com
+console.log(process.env.REACT_APP_MAX_RESULTS); // Output: 50
 
 const api = axios.create({
     baseURL: API_BASE_URL,

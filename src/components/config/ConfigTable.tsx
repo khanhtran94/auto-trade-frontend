@@ -16,7 +16,7 @@ function ConfigTable() {
     const [size, setSize] = useState<SizeType>('large'); // default is 'middle'
     const fetchData = async () => {
         try {
-            const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
+            const response = await axios.get<Item[]>(`${process.env.REACT_APP_API_URL}/configs`);
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -25,7 +25,7 @@ function ConfigTable() {
 
     const fetchCoins = async () => {
         try {
-            const response = await axios.get<Coin[]>('http://127.0.0.1:8080/coins');
+            const response = await axios.get<Coin[]>(`${process.env.REACT_APP_API_URL}/coins`);
             setCoins(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -35,7 +35,7 @@ function ConfigTable() {
     const onCreate = async (values: any) => {
         try {
             // Gọi API để thêm một mục mới
-            const response = await axios.post('http://localhost:8080/configs', values, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/configs`, values, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -57,7 +57,7 @@ function ConfigTable() {
     const onUpdate = async (values: any) => {
         try {
             debugger
-            const response = await axios.put(`http://localhost:8080/configs/${values.id}`, values, {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/configs/${values.id}`, values, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

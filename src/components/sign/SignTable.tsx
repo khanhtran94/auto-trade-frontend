@@ -13,6 +13,8 @@ const SignTable = () => {
     const [size, setSize] = useState<SizeType>('large'); // default is 'middle'
 
     const fetchData = async () => {
+        console.log("132 " + process.env.REACT_APP_API_URL); // Output: https://api.example.com
+        console.log(process.env.REACT_APP_MAX_RESULTS); // Output: 50
         try {
             // Gọi API để lấy dữ liệu Sign
             const response = await signApi.getAll();
