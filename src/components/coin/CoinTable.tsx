@@ -56,7 +56,7 @@ function CoinTable() {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/coins`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': "*"
+                    'access-control-allow-origin': '*'
                 }
             });
             setCoins(response.data);
