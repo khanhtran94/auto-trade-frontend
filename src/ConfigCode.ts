@@ -5,7 +5,9 @@ const configCodes = [
     { value: 'VOLUME', label: 'Volume' },
     { value: 'SCALE', label: 'Scale' },
     { value: 'DELTA', label: 'Delta' },
-    { value: 'MIN_QUANTITY', label: 'Min Quantity' }
+    { value: 'MIN_QUANTITY', label: 'Min Quantity' },
+    { value: 'NO_SL', label: 'No SL' },
+    { value: 'NO_TP', label: 'No TP' }
 ];
 
 export default configCodes;

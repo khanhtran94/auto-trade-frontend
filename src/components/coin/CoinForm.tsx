@@ -21,9 +21,10 @@ const CoinForm: React.FC<CollectionCreateFormProps> = ({
 
     const onFinish = (values: any) => {
         onCreate(values);
+        form.resetFields();
         onCancel();
     };
-    return(
+    return (
         <Modal
             open={open}
             title="Create a new coin"

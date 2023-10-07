@@ -7,7 +7,6 @@ import Item from "../../type/Item";
 import {PlusCircleOutlined} from '@ant-design/icons';
 import type {SizeType} from 'antd/es/config-provider/SizeContext';
 import Coin from "../../type/Coin";
-import coin from "../../type/Coin";
 
 function ConfigTable() {
     const [data, setData] = useState<Item[]>([]);
@@ -18,7 +17,6 @@ function ConfigTable() {
     const fetchData = async () => {
         try {
             const response = await axios.get<Item[]>('http://127.0.0.1:8080/configs');
-            debugger
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -28,7 +26,6 @@ function ConfigTable() {
     const fetchCoins = async () => {
         try {
             const response = await axios.get<Coin[]>('http://127.0.0.1:8080/coins');
-            debugger
             setCoins(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -69,7 +66,7 @@ function ConfigTable() {
         } catch (error) {
             console.error('Error updating config:', error);
         }
-        fetchData();
+        await fetchData();
         setOpen(false);
     };
     useEffect(() => {
@@ -97,7 +94,6 @@ function ConfigTable() {
             dataIndex: 'coin_id',
             key: 'coin_id',
             render: (text: string, record: Item) => {
-                debugger
                 const coin = coins.find(coin => coin.id === record.coinId);
                 return coin ? coin.symbol : 'N/A';
             },
