@@ -99,6 +99,7 @@ function ConfigTable() {
             },
             filters: coins.map((coin) => ({ text: coin.symbol, value: coin.id })),
             onFilter: (value: any, record: Item) => record.coinId === value,
+            filterSearch: true,
             sorter: (a: Item, b: Item) => a.coinId - b.coinId,
         },
         {
