@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Button, Table} from "antd";
+import {Alert, Button, Table} from "antd";
 import Item from "../../type/Item";
 
 import {PlusCircleOutlined} from '@ant-design/icons';
@@ -8,11 +8,37 @@ import type {SizeType} from 'antd/es/config-provider/SizeContext';
 import Coin from "../../type/Coin";
 import ConfigForm from "../config/ConfigForm";
 import CoinForm from "./CoinForm";
+import {  message } from 'antd';
 
 function CoinTable() {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'This is a success message',
+        });
+    };
+
+    const errorMessage = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'This is an error message',
+        });
+    };
+
+    const warning = () => {
+        messageApi.open({
+            type: 'warning',
+            content: 'This is a warning message',
+        });
+    };
+
+
     const onCreate = async (values: any) => {
         try {
             // Gọi API để thêm một mục mới
@@ -28,10 +54,14 @@ function CoinTable() {
 
                 // Nếu muốn tải lại dữ liệu sau khi thêm một mục mới, gọi fetchData()
                 fetchCoins();
+                success()
             } else {
+                errorMessage()
                 console.error('Error creating config:', response.data);
             }
-        } catch (error) {
+        } catch (error: any) {
+            debugger
+            errorMessage()
             console.error('Error creating config:', error);
         }
     };
@@ -83,6 +113,7 @@ function CoinTable() {
 
     return (
         <div>
+            {contextHolder}
             <Button type="primary"
                     shape="round"
                     icon={<PlusCircleOutlined/>}
