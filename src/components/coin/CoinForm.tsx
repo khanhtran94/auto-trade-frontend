@@ -1,5 +1,5 @@
 import {Form, Input, Modal} from 'antd';
-import React, {useEffect} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import Coin from "../../type/Coin";
 
 
@@ -18,8 +18,12 @@ const CoinForm: React.FC<CollectionCreateFormProps> = ({
     useEffect(() => {
         form.resetFields();
     }, [form]);
-
+    const [valueSymbold, setValueSymbold] = useState<string>()
     const onFinish = (values: any) => {
+        values = {
+            ...values,
+            symbol: `${values.symbol}USDT`
+        }
         onCreate(values);
         form.resetFields();
         onCancel();
@@ -54,7 +58,7 @@ const CoinForm: React.FC<CollectionCreateFormProps> = ({
                 <Form.Item
                     name="symbol"
                     label="Symbol">
-                    <Input/>
+                    <Input suffix={"USDT"}/>
                 </Form.Item>
                 <Form.Item
                     name="price"
